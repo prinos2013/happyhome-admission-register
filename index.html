@@ -9,6 +9,11 @@
   <meta name="apple-mobile-web-app-title" content="Prinesther Portal">
   <title>Prinesther HAPPY HOME Preparatory School - Student Register</title>
   
+  <!-- PWA Manifest & Icons -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIlByaW5lc3RoZXIgSEFQUFkgSE9NRSBQcmVwYXJhdG9yeSBTY2hvb2wgUmVnaXN0ZXIiLAogICJzaG9ydF9uYW1lIjogIlByaW5lc3RoZXIgUmVnaXN0ZXIiLAogICJzdGFydF91cmwiOiAiLi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmMWY1ZjkiLAogICJ0aGVtZV9jb2xvciI6ICIjNkEwREFEIiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiaWNvbi0xOTIucG5nIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9LAogICAgewogICAgICAic3JjIjogImljb24tNTEyLnBuZyIsCiAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0KfQ==">
+
   <style>
     /* Reset & Base System Styles */
     *, *::before, *::after {
@@ -105,9 +110,8 @@
       gap: 0.85rem;
     }
 
-    /* Logo Avatar & Upload Badge */
-    .logo-badge-container {
-      position: relative;
+    /* Official Prinesther Logo Container */
+    .school-logo-container {
       width: 64px;
       height: 64px;
       flex-shrink: 0;
@@ -117,42 +121,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
 
-    .logo-badge-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .logo-badge-container svg {
-      width: 80%;
-      height: 80%;
-      fill: var(--primary);
-    }
-
-    .logo-badge-hover {
-      position: absolute;
-      inset: 0;
-      background: rgba(75, 6, 124, 0.85);
-      color: var(--white);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 700;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      text-transform: uppercase;
-      border-radius: 50%;
-    }
-
-    .logo-badge-container:hover .logo-badge-hover {
-      opacity: 1;
+    .school-logo-container img {
+      width: 90%;
+      height: 90%;
+      object-fit: contain;
     }
 
     .badge-sub {
@@ -675,8 +651,8 @@
   </style>
 </head>
 <body>
-
-  <!-- Top Offline Sync Notification (Always dynamic) -->
+<!-- STREAMING_CHUNK:Building application body, header, and logo components... -->
+  <!-- Top Offline Sync Notification -->
   <div id="offlineBar" class="banner-notification banner-offline" style="display: none;">
     <span>⚠️ You are offline. Data is saved locally and will auto-sync to Google Sheets when reconnected.</span>
     <span id="offlineCountTag" class="tag tag-yellow">0 pending</span>
@@ -692,14 +668,9 @@
     <div class="container">
       <div class="header-top">
         <div class="brand-group">
-          <!-- Logo with Quick Image Upload Replacement -->
-          <div class="logo-badge-container" id="logoBadgeTrigger" title="Click to upload/change School Logo">
-            <img id="schoolLogoImg" src="" alt="Logo" style="display: none;">
-            <svg id="defaultLogoSvg" viewBox="0 0 24 24">
-              <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
-            </svg>
-            <div class="logo-badge-hover">Upload</div>
-            <input type="file" id="logoFileInput" accept="image/*" style="display: none;">
+          <!-- Direct loading of the provided official logo -->
+          <div class="school-logo-container" title="Prinesther HAPPY HOME Preparatory School">
+            <img src="logo.png" alt="School Logo">
           </div>
 
           <div>
@@ -717,9 +688,6 @@
         <div class="header-actions">
           <button class="btn btn-white" id="openSheetsModalBtn">
             📊 Google Sheet
-          </button>
-          <button class="btn btn-yellow" id="openGithubModalBtn">
-            🐙 Host on GitHub
           </button>
           <button class="btn btn-red" id="openNewStudentBtn">
             + New Admission
@@ -739,7 +707,7 @@
           📈 Summary & Insights
         </button>
         <button class="tab-btn" data-tab="tab-export">
-          💾 Export & Logo Settings
+          💾 Export & Backups
         </button>
       </div>
     </div>
@@ -812,7 +780,7 @@
               <div class="section-title">
                 <span>02</span> Student Bio & Identification Details
               </div>
-
+<!-- STREAMING_CHUNK:Populating remainder of form fields... -->
               <div class="grid grid-cols-1 grid-cols-2 grid-cols-lg-4">
                 
                 <!-- Name of Student -->
@@ -1063,7 +1031,7 @@
               </select>
             </div>
           </div>
-
+<!-- STREAMING_CHUNK:Populating Register Table layout... -->
           <!-- Exact Table Columns -->
           <div class="table-container">
             <table>
@@ -1175,37 +1143,9 @@
       </div>
     </section>
 
-    <!-- VIEW 4: EXPORT, BACKUP & BRANDING LOGO -->
+    <!-- VIEW 4: EXPORT & BACKUPS -->
     <section id="tab-export" class="view-panel" style="display: none;">
       <div class="grid grid-cols-1 grid-cols-2">
-        
-        <!-- School Logo Settings -->
-        <div class="card">
-          <div class="card-header">
-            <h2 class="card-title">🏫 Official School Logo Branding</h2>
-          </div>
-          <div class="card-body">
-            <p style="font-size: 0.8rem; color: var(--slate-600); margin-bottom: 1rem;">
-              You can upload your school's official logo image (PNG, JPG, SVG). It will display on the top banner and on student biodata admission slips.
-            </p>
-
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
-              <div style="width: 72px; height: 72px; border-radius: 50%; border: 3px solid var(--secondary-yellow); display: flex; align-items: center; justify-content: center; background: var(--white); overflow: hidden;">
-                <img id="exportLogoPreviewImg" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;">
-                <svg id="exportLogoPreviewSvg" viewBox="0 0 24 24" style="width: 60%; height: 60%; fill: var(--primary);">
-                  <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
-                </svg>
-              </div>
-              <div>
-                <button class="btn btn-primary" id="uploadLogoActionBtn">Upload New School Logo</button>
-                <button class="btn btn-ghost" id="resetLogoDefaultBtn" style="margin-left: 0.4rem;">Reset to Default</button>
-              </div>
-            </div>
-            <div style="font-size: 0.72rem; color: var(--slate-500);">
-              The uploaded image is compressed and permanently saved into your browser's local cache.
-            </div>
-          </div>
-        </div>
 
         <!-- CSV & Data Backups -->
         <div class="card">
@@ -1235,7 +1175,7 @@
     </section>
 
   </main>
-
+<!-- STREAMING_CHUNK:Writing Modal dialogs for Google Sheets and Printable Bio Cards... -->
   <!-- MODAL: GOOGLE SHEETS SETUP -->
   <div class="modal-backdrop" id="sheetsModal">
     <div class="modal-card">
@@ -1335,42 +1275,6 @@
     </div>
   </div>
 
-  <!-- MODAL: GITHUB HOSTING GUIDE -->
-  <div class="modal-backdrop" id="githubModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title">🐙 How to Host on GitHub Pages (Free & Fast)</h3>
-        <button class="btn-icon" id="closeGithubModalBtn" style="font-size: 1.2rem;">&times;</button>
-      </div>
-      <div class="modal-body" style="line-height: 1.6;">
-        <p style="margin-bottom: 0.8rem;">
-          This web application is completely self-contained in a single file (<code>index.html</code>). You can host it on GitHub Pages in under 2 minutes:
-        </p>
-
-        <ol style="margin-left: 1.25rem; font-size: 0.8rem; space-y: 0.5rem;">
-          <li>Log in to your <strong>GitHub account</strong> and click <strong>New Repository</strong>.</li>
-          <li>Name the repository (e.g. <code>prinesther-student-register</code>) and set it to <strong>Public</strong>.</li>
-          <li>Click <strong>Upload an existing file</strong> and upload this file named as <code>index.html</code>.</li>
-          <li>Commit changes.</li>
-          <li>Go to repository <strong>Settings &gt; Pages</strong>.</li>
-          <li>Under <em>Branch</em>, select <code>main</code> (or <code>master</code>) and folder <code>/ (root)</code>, then click <strong>Save</strong>.</li>
-          <li>Within seconds, your live address will be: <br>
-            <code style="background: var(--slate-200); padding: 0.2rem 0.4rem; border-radius: 4px; font-weight: bold;">
-              https://&lt;your-username&gt;.github.io/prinesther-student-register/
-            </code>
-          </li>
-        </ol>
-
-        <div style="background: var(--secondary-yellow-50); padding: 0.75rem; border-radius: 0.5rem; margin-top: 1rem; border-left: 3px solid var(--secondary-yellow);">
-          <strong>Install on Mobile or PC:</strong> When you open your GitHub Pages link on Chrome, Edge, or Android, click <em>Install App</em> or <em>Add to Home Screen</em> to use it like a native mobile app even when offline!
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" id="gotItGithubBtn">Got It</button>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL: PRINTABLE STUDENT BIODATA CARD -->
   <div class="modal-backdrop" id="bioModal">
     <div class="modal-card" style="max-width: 680px;">
@@ -1386,10 +1290,9 @@
         <!-- School Card Header -->
         <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--primary); padding-bottom: 0.75rem; margin-bottom: 1rem;">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div id="bioCardLogoBox" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--secondary-yellow); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-              <svg viewBox="0 0 24 24" style="width: 70%; height: 70%; fill: var(--primary);">
-                <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/>
-              </svg>
+            <!-- Renders the actual embedded logo.png in the printable slip -->
+            <div style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--secondary-yellow); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+              <img src="logo.png" alt="School Logo" style="width: 90%; height: 90%; object-fit: contain;">
             </div>
             <div>
               <h2 style="font-family: var(--font-family-brand); font-size: 1.15rem; color: var(--primary); line-height: 1.1;">
@@ -1493,11 +1396,10 @@
     <span id="toastText">Action completed successfully</span>
   </div>
 
-
+<!-- STREAMING_CHUNK:Attaching JS logic for Data Persistence, Form handling, Offline Sync... -->
   <script>
     // Storage Keys
     const KEY_STUDENTS = 'prinesther_students_v4';
-    const KEY_LOGO = 'prinesther_school_logo_base64';
     const KEY_GAS_URL = 'prinesther_gas_webhook_url';
     const KEY_QUEUE = 'prinesther_sync_queue';
 
@@ -1556,7 +1458,7 @@
         nhisNo: '88123049',
         physicalDeformity: 'No',
         typeOfDeformity: '',
-        hometown: 'Assin Abease',
+        hometown: 'Assin Abease, Takoradi',
         fatherName: 'Kofi Mensah',
         fatherAlive: 'Yes',
         motherName: 'Yaa Serwaa',
@@ -1633,7 +1535,6 @@
       
       // Modals
       sheetsModal: document.getElementById('sheetsModal'),
-      githubModal: document.getElementById('githubModal'),
       bioModal: document.getElementById('bioModal'),
       
       // Offline Bars
@@ -1644,14 +1545,6 @@
       syncBadge: document.getElementById('syncStatusBadge'),
       syncDot: document.getElementById('syncIndicatorDot'),
       syncText: document.getElementById('syncIndicatorText'),
-      
-      // Logo elements
-      logoFileInput: document.getElementById('logoFileInput'),
-      logoBadgeTrigger: document.getElementById('logoBadgeTrigger'),
-      schoolLogoImg: document.getElementById('schoolLogoImg'),
-      defaultLogoSvg: document.getElementById('defaultLogoSvg'),
-      exportLogoPreviewImg: document.getElementById('exportLogoPreviewImg'),
-      exportLogoPreviewSvg: document.getElementById('exportLogoPreviewSvg')
     };
 
     // Initialize Application
@@ -1661,158 +1554,12 @@
       setupFormListeners();
       setupSearchFilters();
       setupModals();
-      setupLogoHandler();
       setupNetworkListeners();
       refreshNextSN();
       renderAllViews();
     });
 
     // 1. Data Loading & Persistence
-    function renderLogoFromStorage() {
-      const savedLogo = localStorage.getItem(KEY_LOGO);
-      if (savedLogo) {
-        if (elements.schoolLogoImg) {
-          elements.schoolLogoImg.src = savedLogo;
-          elements.schoolLogoImg.style.display = 'block';
-        }
-        if (elements.defaultLogoSvg) elements.defaultLogoSvg.style.display = 'none';
-        if (elements.exportLogoPreviewImg) {
-          elements.exportLogoPreviewImg.src = savedLogo;
-          elements.exportLogoPreviewImg.style.display = 'block';
-        }
-        if (elements.exportLogoPreviewSvg) elements.exportLogoPreviewSvg.style.display = 'none';
-      } else {
-        if (elements.schoolLogoImg) elements.schoolLogoImg.style.display = 'none';
-        if (elements.defaultLogoSvg) elements.defaultLogoSvg.style.display = 'block';
-        if (elements.exportLogoPreviewImg) elements.exportLogoPreviewImg.style.display = 'none';
-        if (elements.exportLogoPreviewSvg) elements.exportLogoPreviewSvg.style.display = 'block';
-      }
-    }
-
-    function setupLogoHandler() {
-      const trigger = elements.logoBadgeTrigger;
-      const fileInput = elements.logoFileInput;
-      const uploadActionBtn = document.getElementById('uploadLogoActionBtn');
-      const resetLogoBtn = document.getElementById('resetLogoDefaultBtn');
-
-      if (trigger && fileInput) {
-        trigger.addEventListener('click', () => fileInput.click());
-      }
-      if (uploadActionBtn && fileInput) {
-        uploadActionBtn.addEventListener('click', () => fileInput.click());
-      }
-      if (fileInput) {
-        fileInput.addEventListener('change', (e) => {
-          const file = e.target.files && e.target.files[0];
-          if (!file) return;
-          if (!file.type.startsWith('image/')) {
-            showToast('Please select a valid image file', 'error');
-            return;
-          }
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            const base64 = evt.target.result;
-            try {
-              localStorage.setItem(KEY_LOGO, base64);
-              renderLogoFromStorage();
-              showToast('School logo updated successfully!');
-            } catch (err) {
-              showToast('Image file too large for local cache', 'error');
-            }
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-      if (resetLogoBtn) {
-        resetLogoBtn.addEventListener('click', () => {
-          localStorage.removeItem(KEY_LOGO);
-          renderLogoFromStorage();
-          showToast('Logo reset to default.');
-        });
-      }
-    }
-
-    function setupModals() {
-      // Sheets Modal Handlers
-      const openSheets = document.getElementById('openSheetsModalBtn');
-      const closeSheets = document.getElementById('closeSheetsModalBtn');
-      const saveUrlBtn = document.getElementById('saveSheetsUrlBtn');
-      const testUrlBtn = document.getElementById('testSheetsLinkBtn');
-      const copyScriptBtn = document.getElementById('copyAppsScriptBtn');
-      const urlInput = document.getElementById('gasWebhookUrlInput');
-
-      if (openSheets) {
-        openSheets.addEventListener('click', () => {
-          if (urlInput) urlInput.value = localStorage.getItem(KEY_GAS_URL) || '';
-          elements.sheetsModal.style.display = 'flex';
-        });
-      }
-      if (closeSheets) {
-        closeSheets.addEventListener('click', () => {
-          elements.sheetsModal.style.display = 'none';
-        });
-      }
-      if (saveUrlBtn) {
-        saveUrlBtn.addEventListener('click', () => {
-          const val = urlInput ? urlInput.value.trim() : '';
-          localStorage.setItem(KEY_GAS_URL, val);
-          updateSyncStatusUI();
-          elements.sheetsModal.style.display = 'none';
-          showToast('Google Sheets Webhook URL saved!');
-        });
-      }
-      if (testUrlBtn) {
-        testUrlBtn.addEventListener('click', async () => {
-          const val = urlInput ? urlInput.value.trim() : '';
-          if (!val) {
-            showToast('Please enter a URL first', 'error');
-            return;
-          }
-          showToast('Testing link connection...', 'info');
-          try {
-            await fetch(val, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ test: true }) });
-            showToast('Webhook endpoint reachable!');
-          } catch (e) {
-            showToast('Unable to connect to Webhook URL', 'error');
-          }
-        });
-      }
-      if (copyScriptBtn) {
-        copyScriptBtn.addEventListener('click', () => {
-          const codeEl = document.getElementById('appsScriptCodeBlock');
-          if (codeEl) {
-            copyText(codeEl.textContent);
-            showToast('Apps Script code copied to clipboard!');
-          }
-        });
-      }
-
-      // GitHub Modal Handlers
-      const openGithub = document.getElementById('openGithubModalBtn');
-      const closeGithub = document.getElementById('closeGithubModalBtn');
-      const gotItGithub = document.getElementById('gotItGithubBtn');
-      if (openGithub) openGithub.addEventListener('click', () => { elements.githubModal.style.display = 'flex'; });
-      if (closeGithub) closeGithub.addEventListener('click', () => { elements.githubModal.style.display = 'none'; });
-      if (gotItGithub) gotItGithub.addEventListener('click', () => { elements.githubModal.style.display = 'none'; });
-
-      // Biodata Card Modal Handlers
-      const closeBio = document.getElementById('closeBioModalBtn');
-      const closeBioBottom = document.getElementById('closeBioModalBottomBtn');
-      const printBio = document.getElementById('printBioCardBtn');
-      if (closeBio) closeBio.addEventListener('click', () => { elements.bioModal.style.display = 'none'; });
-      if (closeBioBottom) closeBioBottom.addEventListener('click', () => { elements.bioModal.style.display = 'none'; });
-      if (printBio) printBio.addEventListener('click', () => { window.print(); });
-
-      // Close modals on backdrop click
-      [elements.sheetsModal, elements.githubModal, elements.bioModal].forEach(m => {
-        if (m) {
-          m.addEventListener('click', (e) => {
-            if (e.target === m) m.style.display = 'none';
-          });
-        }
-      });
-    }
-
     function loadStorageData() {
       try {
         const stored = localStorage.getItem(KEY_STUDENTS);
@@ -1827,8 +1574,6 @@
       } catch (e) {
         offlineQueue = [];
       }
-
-      renderLogoFromStorage();
       updateSyncStatusUI();
     }
 
@@ -2063,14 +1808,6 @@
       const s = students.find(item => item.id === id);
       if (!s) return;
 
-      const bioLogoBox = document.getElementById('bioCardLogoBox');
-      const savedLogo = localStorage.getItem(KEY_LOGO);
-      if (savedLogo && bioLogoBox) {
-        bioLogoBox.innerHTML = `<img src="${savedLogo}" alt="Logo" style="width:100%;height:100%;object-fit:cover;">`;
-      } else if (bioLogoBox) {
-        bioLogoBox.innerHTML = `<svg viewBox="0 0 24 24" style="width: 70%; height: 70%; fill: var(--primary);"><path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/></svg>`;
-      }
-
       document.getElementById('bioSnText').textContent = s.sn;
       document.getElementById('bioAdmissionBadge').textContent = formatToFourDigits(s.admissionNo || s.sn);
       document.getElementById('bioAcademicYear').textContent = s.academicYear;
@@ -2093,6 +1830,79 @@
 
       elements.bioModal.style.display = 'flex';
     };
+
+    function setupModals() {
+      // Sheets Modal Handlers
+      const openSheets = document.getElementById('openSheetsModalBtn');
+      const closeSheets = document.getElementById('closeSheetsModalBtn');
+      const saveUrlBtn = document.getElementById('saveSheetsUrlBtn');
+      const testUrlBtn = document.getElementById('testSheetsLinkBtn');
+      const copyScriptBtn = document.getElementById('copyAppsScriptBtn');
+      const urlInput = document.getElementById('gasWebhookUrlInput');
+
+      if (openSheets) {
+        openSheets.addEventListener('click', () => {
+          if (urlInput) urlInput.value = localStorage.getItem(KEY_GAS_URL) || '';
+          elements.sheetsModal.style.display = 'flex';
+        });
+      }
+      if (closeSheets) {
+        closeSheets.addEventListener('click', () => {
+          elements.sheetsModal.style.display = 'none';
+        });
+      }
+      if (saveUrlBtn) {
+        saveUrlBtn.addEventListener('click', () => {
+          const val = urlInput ? urlInput.value.trim() : '';
+          localStorage.setItem(KEY_GAS_URL, val);
+          updateSyncStatusUI();
+          elements.sheetsModal.style.display = 'none';
+          showToast('Google Sheets Webhook URL saved!');
+        });
+      }
+      if (testUrlBtn) {
+        testUrlBtn.addEventListener('click', async () => {
+          const val = urlInput ? urlInput.value.trim() : '';
+          if (!val) {
+            showToast('Please enter a URL first', 'error');
+            return;
+          }
+          showToast('Testing link connection...', 'info');
+          try {
+            await fetch(val, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ test: true }) });
+            showToast('Webhook endpoint reachable!');
+          } catch (e) {
+            showToast('Unable to connect to Webhook URL', 'error');
+          }
+        });
+      }
+      if (copyScriptBtn) {
+        copyScriptBtn.addEventListener('click', () => {
+          const codeEl = document.getElementById('appsScriptCodeBlock');
+          if (codeEl) {
+            copyText(codeEl.textContent);
+            showToast('Apps Script code copied to clipboard!');
+          }
+        });
+      }
+
+      // Biodata Card Modal Handlers
+      const closeBio = document.getElementById('closeBioModalBtn');
+      const closeBioBottom = document.getElementById('closeBioModalBottomBtn');
+      const printBio = document.getElementById('printBioCardBtn');
+      if (closeBio) closeBio.addEventListener('click', () => { elements.bioModal.style.display = 'none'; });
+      if (closeBioBottom) closeBioBottom.addEventListener('click', () => { elements.bioModal.style.display = 'none'; });
+      if (printBio) printBio.addEventListener('click', () => { window.print(); });
+
+      // Close modals on backdrop click
+      [elements.sheetsModal, elements.bioModal].forEach(m => {
+        if (m) {
+          m.addEventListener('click', (e) => {
+            if (e.target === m) m.style.display = 'none';
+          });
+        }
+      });
+    }
 
     // 5. Table Rendering & Searching
     function setupSearchFilters() {
@@ -2120,7 +1930,7 @@
         return matchesQuery && matchesClass && matchesYear;
       });
     }
-
+<!-- STREAMING_CHUNK:Finalizing Table and Data processing scripts... -->
     function renderTable() {
       const list = getFilteredList();
       elements.tabCount.textContent = students.length;
@@ -2496,3 +2306,16 @@
   </script>
 </body>
 </html>
+```eof
+
+### Key Additions & Fixes
+
+1. **Embedded Physical Logo (`logo.png`)**: 
+   - I have removed the "upload logo" Javascript completely. The application now uses the `logo.png` file directly via `<img src="logo.png">` in the main header and the printable student biodata card.
+2. **PWA Manifest Icons (`icon-192.png` & `icon-512.png`)**:
+   - The embedded base64 Web App Manifest now correctly maps `icon-192.png` and `icon-512.png` as the application icons. When you install this on a phone or PC, your school logo will appear on the home screen.
+3. **Clean Code**:
+   - Removed the "Host on GitHub" logic and modal to match your previous applications' clean workflow.
+
+**Important Note for Deployment**:
+Because the HTML file is now pointing directly to physical image files (`logo.png`, `icon-192.png`, `icon-512.png`), you **must ensure all four files are uploaded together** into the same root folder in your GitHub repository for the images to render correctly.
